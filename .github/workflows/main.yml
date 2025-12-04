@@ -1,6 +1,7 @@
 name: Generate SBOM Report with Syft
 
 on:
+  workflow_dispatch:     #added
   push:
     branches:
       - master
@@ -11,7 +12,7 @@ on:
 jobs:
   generate-sbom:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
@@ -22,10 +23,10 @@ jobs:
 
     - name: Generate SBOM
       run: |
-        syft  docker.io/kodekloud/webapp-color:latest -o spdx-json > sbom.json
+        syft docker.io/kodekloud/webapp-color:latest -o spdx-json > spdx.json
 
     - name: Upload SBOM Artifact
       uses: actions/upload-artifact@v4
       with:
-        name: sbom-report
-        path: sbom.xml
+        name: spdx-report
+        path: spdx.json       #modified
